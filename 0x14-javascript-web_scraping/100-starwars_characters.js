@@ -1,17 +1,14 @@
 #!/usr/bin/node
-const request = require('request');
-const url = 'http://swapi.co/api/films/' + process.argv[2];
+import requests
 
-request(url, function (err, response, body) {
-  if (err == null) {
-    const resp = JSON.parse(body);
-    const characters = resp.characters;
-    for (let i = 0; i < characters.length; i++) {
-      request(characters[i], function (err, response, body) {
-        if (err == null) {
-          console.log(JSON.parse(body).name);
-        }
-      });
-    }
-  }
-});
+movie_id = input("Enter the movie ID: ")
+url = f"https://swapi.dev/api/films/{movie_id}/"
+
+response = requests.get(url)
+data = response.json()
+
+characters = data["characters"]
+
+for character in characters:
+    character_data = requests.get(character).json()
+    print(character_data["name"])
